@@ -1,33 +1,89 @@
 "use client";
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useCallback,
+} from "react";
 
-// Passo 1: Criação do Contexto
-export const QuizContext = createContext({
+type AnswerDetail = {
+  questionId: string;
+  isCorrect: boolean;
+  selectedOption: string;
+};
+
+type QuizContextType = {
+  correctAnswers: number;
+  wrongAnswers: number;
+  totalTimeSpent: number;
+  startTime: Date | null;
+  endTime: Date | null;
+  answerDetails: AnswerDetail[];
+  addCorrectAnswer: () => void;
+  addWrongAnswer: () => void;
+  addTimeSpent: (time: number) => void;
+  setStartTime: (time: Date) => void;
+  setEndTime: (time: Date) => void;
+  addAnswerDetail: (detail: AnswerDetail) => void;
+};
+
+const defaultState: QuizContextType = {
   correctAnswers: 0,
+  wrongAnswers: 0,
   totalTimeSpent: 0,
-  updateQuizState: (newCorrectAnswers: number, newTimeSpent: number) => {},
-});
+  startTime: null,
+  endTime: null,
+  answerDetails: [],
+  addCorrectAnswer: () => {},
+  addWrongAnswer: () => {},
+  addTimeSpent: () => {},
+  setStartTime: () => {},
+  setEndTime: () => {},
+  addAnswerDetail: () => {},
+};
 
-// Passo 2: Criação do Provider
+const QuizContext = createContext<QuizContextType>(defaultState);
 
 export const QuizProvider = ({ children }: { children: ReactNode }) => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [wrongAnswers, setWrongAnswers] = useState(0);
   const [totalTimeSpent, setTotalTimeSpent] = useState(0);
+  const [startTime, setStartTime] = useState<Date | null>(null);
+  const [endTime, setEndTime] = useState<Date | null>(null);
+  const [answerDetails, setAnswerDetails] = useState<AnswerDetail[]>([]);
 
-  const updateQuizState = (
-    newCorrectAnswers: number,
-    newTimeSpent: number
-  ): void => {
-    setCorrectAnswers((prev) => prev + newCorrectAnswers);
-    setTotalTimeSpent((prev) => prev + newTimeSpent);
-  };
+  const addCorrectAnswer = useCallback(() => {
+    setCorrectAnswers((prev) => prev + 1);
+  }, []);
+
+  const addWrongAnswer = useCallback(() => {
+    setWrongAnswers((prev) => prev + 1);
+  }, []);
+
+  const addTimeSpent = useCallback((time: number) => {
+    setTotalTimeSpent((prev) => prev + time);
+  }, []);
+
+  const addAnswerDetail = useCallback((detail: AnswerDetail) => {
+    setAnswerDetails((prev) => [...prev, detail]);
+  }, []);
 
   return (
     <QuizContext.Provider
       value={{
         correctAnswers,
+        wrongAnswers,
         totalTimeSpent,
-        updateQuizState,
+        startTime,
+        endTime,
+        answerDetails,
+        addCorrectAnswer,
+        addWrongAnswer,
+        addTimeSpent,
+        setStartTime,
+        setEndTime,
+        addAnswerDetail,
       }}
     >
       {children}
