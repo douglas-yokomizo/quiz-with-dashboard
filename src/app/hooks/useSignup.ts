@@ -11,14 +11,20 @@ export const useSignup = () => {
   const [message, setMessage] = useState("");
   const router = useRouter();
 
-  const { correctAnswers, totalTimeSpent, startTime, endTime, answerDetails } =
-    useQuiz();
+  const {
+    correctAnswers,
+    totalTimeSpent,
+    startTime,
+    endTime,
+    answerDetails,
+    setUserName,
+  } = useQuiz();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
-    router.push("/");
+    router.push("/startQuiz");
 
     const { data: userData, error } = await supabase
       .from("users")
@@ -50,8 +56,9 @@ export const useSignup = () => {
       setMessage("Cadastro realizado com sucesso!");
       setName("");
       setEmail("");
+      setUserName(name);
       setLoading(false);
-      router.push("/");
+      router.push("/startQuiz");
     }
   };
 

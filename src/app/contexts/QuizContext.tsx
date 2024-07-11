@@ -20,12 +20,14 @@ type QuizContextType = {
   startTime: Date | null;
   endTime: Date | null;
   answerDetails: AnswerDetail[];
+  userName: string;
   addCorrectAnswer: () => void;
   addWrongAnswer: () => void;
   addTimeSpent: (time: number) => void;
   setStartTime: (time: Date) => void;
   setEndTime: (time: Date) => void;
   addAnswerDetail: (detail: AnswerDetail) => void;
+  setUserName: (name: string) => void;
 };
 
 const defaultState: QuizContextType = {
@@ -35,12 +37,14 @@ const defaultState: QuizContextType = {
   startTime: null,
   endTime: null,
   answerDetails: [],
+  userName: "",
   addCorrectAnswer: () => {},
   addWrongAnswer: () => {},
   addTimeSpent: () => {},
   setStartTime: () => {},
   setEndTime: () => {},
   addAnswerDetail: () => {},
+  setUserName: () => {},
 };
 
 const QuizContext = createContext<QuizContextType>(defaultState);
@@ -52,6 +56,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
   const [startTime, setStartTime] = useState<Date | null>(null);
   const [endTime, setEndTime] = useState<Date | null>(null);
   const [answerDetails, setAnswerDetails] = useState<AnswerDetail[]>([]);
+  const [userName, setUserName] = useState("");
 
   const addCorrectAnswer = useCallback(() => {
     setCorrectAnswers((prev) => prev + 1);
@@ -78,12 +83,14 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         startTime,
         endTime,
         answerDetails,
+        userName,
         addCorrectAnswer,
         addWrongAnswer,
         addTimeSpent,
         setStartTime,
         setEndTime,
         addAnswerDetail,
+        setUserName,
       }}
     >
       {children}
