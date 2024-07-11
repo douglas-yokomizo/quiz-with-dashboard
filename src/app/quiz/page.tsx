@@ -40,14 +40,12 @@ const QuizPage = () => {
       setTotalTime((prevTotalTime) => prevTotalTime + 1);
     }, 1000);
     return () => clearInterval(interval);
-  }, [questions, setQuizStartTime, setTotalTime]);
+  }, [setQuizStartTime, setTotalTime]);
 
   useEffect(() => {
-    // Definir startTime quando o quiz começa
     setStartTime(new Date());
 
     return () => {
-      // Definir endTime quando o componente é desmontado, o que pode indicar o fim do quiz
       setEndTime(new Date());
     };
   }, [setStartTime, setEndTime]);
