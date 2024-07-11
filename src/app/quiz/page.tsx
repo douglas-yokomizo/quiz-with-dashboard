@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { questions } from "../data/questions";
 import { supabase } from "../lib/supabase";
@@ -28,6 +28,7 @@ const QuizPage = () => {
     setEndTime,
     setStartTime,
     addAnswerDetail,
+    answerDetails,
   } = useQuiz();
 
   useEffect(() => {
@@ -53,14 +54,6 @@ const QuizPage = () => {
   }, []);
 
   const handleNextQuestion = useCallback(async () => {
-    if (selectedAnswer !== null && isCorrectAnswer !== null) {
-      const detail = {
-        questionId: randomQuestions[currentIndex].question, // Supondo que cada pergunta tenha um identificador único
-        isCorrect: isCorrectAnswer,
-        selectedOption: selectedAnswer,
-      };
-      addAnswerDetail(detail);
-    }
     if (currentIndex + 1 < randomQuestions.length) {
       setCurrentIndex(currentIndex + 1);
       setRemainingTime(-1);
@@ -70,7 +63,6 @@ const QuizPage = () => {
       setSelectedAnswer(null);
       setIsCorrectAnswer(null);
     } else {
-      // Finish the quiz and redirect to the result screen
       const timeSpent = Math.floor((Date.now() - quizStartTime) / 1000);
       addTimeSpent(timeSpent);
       router.push("/result");
@@ -97,14 +89,23 @@ const QuizPage = () => {
 
   const handleSelectOption = (option: string) => {
     setSelectedAnswer(option);
-    if (option === randomQuestions[currentIndex].answer) {
+    const isCorrect = option === randomQuestions[currentIndex].answer;
+    setIsCorrectAnswer(isCorrect);
+
+    const detail = {
+      questionId: randomQuestions[currentIndex].question,
+      isCorrect,
+      selectedOption: option,
+    };
+    addAnswerDetail(detail);
+
+    if (isCorrect) {
       addCorrectAnswer();
-      setIsCorrectAnswer(true);
     } else {
-      addWrongAnswer();
-      setIsCorrectAnswer(false);
+      addWrongAnswer;
     }
-    setTimeout(() => handleNextQuestion(), 1000); // Wait 1 second before moving to the next question
+
+    setTimeout(() => handleNextQuestion(), 500);
   };
 
   return (

@@ -19,24 +19,25 @@ const SignupPage = () => {
 
     const { data: userData, error } = await supabase
       .from("users")
-      .insert([{ name, email, score: 0, played_time: 0 }]);
+      .insert([
+        { name, email, score: correctAnswers, played_time: totalTimeSpent },
+      ]);
 
     if (error) {
       setMessage(`Erro ao cadastrar: ${error.message}`);
     } else {
-      // Inclua os novos campos na inserção na tabela quiz_results
+      const userId = userData?.[0]?.id;
+
       const { data: quizData, error: quizError } = await supabase
         .from("quiz_results")
         .insert([
           {
-            user_id: (userData && userData[0] ? userData[0].id : null) as
-              | number
-              | null,
-            score: correctAnswers, // Ajuste conforme necessário
+            user_id: userId,
+            score: correctAnswers,
             played_time: totalTimeSpent,
-            start_time: startTime, // Adicione o campo start_time
-            end_time: endTime, // Adicione o campo end_time
-            answers_details: answerDetails, // Adicione o campo answers_details
+            start_time: startTime,
+            end_time: endTime,
+            answers_details: answerDetails,
           },
         ]);
 

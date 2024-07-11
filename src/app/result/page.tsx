@@ -16,7 +16,11 @@ const ResultPage = () => {
       <div>
         <p>Detalhes das respostas:</p>
         {answerDetails.map((detail, index) => (
-          <p key={index}>{String(detail)}</p>
+          <div key={index}>
+            <p>Questão: {detail.questionId}</p>
+            <p> Opção selecionada {detail.selectedOption}</p>
+            <p>Resposta correta:{detail.isCorrect ? "sim" : "não"}</p>
+          </div>
         ))}
       </div>
       <Link href={"/signup"}>Cadastre-se</Link>
