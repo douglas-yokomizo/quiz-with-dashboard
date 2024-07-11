@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { questions } from "../data/questions";
-import { supabase } from "../lib/supabase";
 import { useQuiz } from "../contexts/QuizContext";
 
 type Question = {
@@ -41,7 +40,7 @@ const QuizPage = () => {
       setTotalTime((prevTotalTime) => prevTotalTime + 1);
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [questions, setQuizStartTime, setTotalTime]);
 
   useEffect(() => {
     // Definir startTime quando o quiz começa
@@ -51,7 +50,7 @@ const QuizPage = () => {
       // Definir endTime quando o componente é desmontado, o que pode indicar o fim do quiz
       setEndTime(new Date());
     };
-  }, []);
+  }, [setStartTime, setEndTime]);
 
   const handleNextQuestion = useCallback(async () => {
     if (currentIndex + 1 < randomQuestions.length) {
@@ -67,14 +66,7 @@ const QuizPage = () => {
       addTimeSpent(timeSpent);
       router.push("/result");
     }
-  }, [
-    currentIndex,
-    randomQuestions,
-    selectedAnswer,
-    isCorrectAnswer,
-    addAnswerDetail,
-    router,
-  ]);
+  }, [currentIndex, randomQuestions, router, quizStartTime, addTimeSpent]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -102,7 +94,7 @@ const QuizPage = () => {
     if (isCorrect) {
       addCorrectAnswer();
     } else {
-      addWrongAnswer;
+      addWrongAnswer();
     }
 
     setTimeout(() => handleNextQuestion(), 500);

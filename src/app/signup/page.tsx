@@ -26,13 +26,10 @@ const SignupPage = () => {
     if (error) {
       setMessage(`Erro ao cadastrar: ${error.message}`);
     } else {
-      const userId = userData?.[0]?.id;
-
       const { data: quizData, error: quizError } = await supabase
         .from("quiz_results")
         .insert([
           {
-            user_id: userId,
             score: correctAnswers,
             played_time: totalTimeSpent,
             start_time: startTime,
