@@ -21,6 +21,7 @@ type QuizContextType = {
   endTime: Date | null;
   answerDetails: AnswerDetail[];
   userName: string;
+  userEmail: string;
   addCorrectAnswer: () => void;
   addWrongAnswer: () => void;
   addTimeSpent: (time: number) => void;
@@ -28,6 +29,7 @@ type QuizContextType = {
   setEndTime: (time: Date) => void;
   addAnswerDetail: (detail: AnswerDetail) => void;
   setUserName: (name: string) => void;
+  setUserEmail: (email: string) => void;
 };
 
 const defaultState: QuizContextType = {
@@ -38,6 +40,7 @@ const defaultState: QuizContextType = {
   endTime: null,
   answerDetails: [],
   userName: "",
+  userEmail: "",
   addCorrectAnswer: () => {},
   addWrongAnswer: () => {},
   addTimeSpent: () => {},
@@ -45,18 +48,28 @@ const defaultState: QuizContextType = {
   setEndTime: () => {},
   addAnswerDetail: () => {},
   setUserName: () => {},
+  setUserEmail: () => {},
 };
 
 const QuizContext = createContext<QuizContextType>(defaultState);
 
 export const QuizProvider = ({ children }: { children: ReactNode }) => {
-  const [correctAnswers, setCorrectAnswers] = useState(0);
-  const [wrongAnswers, setWrongAnswers] = useState(0);
-  const [totalTimeSpent, setTotalTimeSpent] = useState(0);
-  const [startTime, setStartTime] = useState<Date | null>(null);
-  const [endTime, setEndTime] = useState<Date | null>(null);
-  const [answerDetails, setAnswerDetails] = useState<AnswerDetail[]>([]);
-  const [userName, setUserName] = useState("");
+  const [correctAnswers, setCorrectAnswers] = useState(
+    defaultState.correctAnswers
+  );
+  const [wrongAnswers, setWrongAnswers] = useState(defaultState.wrongAnswers);
+  const [totalTimeSpent, setTotalTimeSpent] = useState(
+    defaultState.totalTimeSpent
+  );
+  const [startTime, setStartTime] = useState<Date | null>(
+    defaultState.startTime
+  );
+  const [endTime, setEndTime] = useState<Date | null>(defaultState.endTime);
+  const [answerDetails, setAnswerDetails] = useState<AnswerDetail[]>(
+    defaultState.answerDetails
+  );
+  const [userName, setUserName] = useState(defaultState.userName);
+  const [userEmail, setUserEmail] = useState(defaultState.userEmail);
 
   const addCorrectAnswer = useCallback(() => {
     setCorrectAnswers((prev) => prev + 1);
@@ -84,6 +97,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         endTime,
         answerDetails,
         userName,
+        userEmail,
         addCorrectAnswer,
         addWrongAnswer,
         addTimeSpent,
@@ -91,6 +105,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         setEndTime,
         addAnswerDetail,
         setUserName,
+        setUserEmail,
       }}
     >
       {children}

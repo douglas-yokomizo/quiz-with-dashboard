@@ -1,9 +1,26 @@
 "use client";
-import { useSignup } from "../hooks/useSignup";
+import { useRouter } from "next/navigation";
+import { useQuiz } from "../contexts/QuizContext";
+import { useState } from "react";
 
 const SignupPage = () => {
-  const { name, setName, email, setEmail, loading, message, handleSignup } =
-    useSignup();
+  const { setUserName, setUserEmail } = useQuiz();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const route = useRouter();
+
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+
+    setUserName(name);
+    setUserEmail(email);
+    setMessage("Cadastro realizado com sucesso!");
+    setLoading(false);
+    route.push("/startQuiz");
+  };
 
   return (
     <div>

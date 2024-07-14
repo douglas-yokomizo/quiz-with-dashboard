@@ -27,7 +27,6 @@ const QuizPage = () => {
     setEndTime,
     setStartTime,
     addAnswerDetail,
-    answerDetails,
   } = useQuiz();
 
   useEffect(() => {
@@ -99,34 +98,42 @@ const QuizPage = () => {
   };
 
   return (
-    <div>
-      <h1>Quiz</h1>
-      <div>Tempo total: {totalTime} segundos </div>
-      {randomQuestions.length > 0 && (
-        <div>
-          <p className="flex justify-center items-center">
-            {randomQuestions[currentIndex].question}
-          </p>
-          <div className="flex flex-col">
-            {randomQuestions[currentIndex].options.map((option) => (
-              <button
-                key={option}
-                className={`${
-                  selectedAnswer === option
-                    ? isCorrectAnswer
-                      ? "bg-blue-500"
-                      : "bg-red-500"
-                    : ""
-                }`}
-                onClick={() => handleSelectOption(option)}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-          <div>Remaining time: {remainingTime} seconds</div>
+    <div className="flex flex-col justify-center items-center h-screen">
+      {/* <img src="/path/to/logo.png" alt="Empresa Logo" className="mb-8" /> */}
+      <div className="w-full max-w-md">
+        <div className="bg-gray-200 h-2 w-full mb-6">
+          <div
+            className="bg-blue-600 h-2"
+            style={{ width: `${(remainingTime / 30) * 100}%` }}
+          ></div>
         </div>
-      )}
+        <div>Tempo total: {totalTime} segundos </div>
+        {randomQuestions.length > 0 && (
+          <div>
+            <p className="flex justify-center items-center">
+              {randomQuestions[currentIndex].question}
+            </p>
+            <div className="flex flex-col">
+              {randomQuestions[currentIndex].options.map((option) => (
+                <button
+                  key={option}
+                  className={`${
+                    selectedAnswer === option
+                      ? isCorrectAnswer
+                        ? "bg-blue-500"
+                        : "bg-red-500"
+                      : ""
+                  }`}
+                  onClick={() => handleSelectOption(option)}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+            <div>Remaining time: {remainingTime} seconds</div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

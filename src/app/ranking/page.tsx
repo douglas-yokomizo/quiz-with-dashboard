@@ -1,4 +1,3 @@
-// src/app/ranking/page.tsx
 "use client";
 import React, { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
