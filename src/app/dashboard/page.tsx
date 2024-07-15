@@ -1,73 +1,74 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { supabase } from "../lib/supabase";
-import { Bar } from "react-chartjs-2";
+import { Line, Pie } from "react-chartjs-2";
+import { Chart, registerables } from "chart.js";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+  fetchActivityByHourFromSupabase,
+  fetchTotalPlayedTime,
+  fetchTotalUsers,
+} from "../services/supabaseService"; // Ajuste o caminho conforme necessário
+import { FaUsers } from "react-icons/fa";
+import { MdAccessTime } from "react-icons/md";
+import { AiOutlineFieldTime } from "react-icons/ai";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-type UserDetails = {
-  name: string;
-  email: string;
-  score: number;
-  played_time: number;
-  answer_details: AnswerDetails[];
-};
-
-type AnswerDetails = {
-  questionId: number;
-  isCorrect: boolean;
-  selectedOption: string;
-};
+Chart.register(...registerables);
 
 const DashboardPage = () => {
-  const [userDetails, setUserDetails] = useState<UserDetails[]>([]);
+  const [activityByHour, setActivityByHour] = useState(Array(24).fill(0));
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalPlayedTime, setTotalPlayedTime] = useState(0);
+
+  const formatTime = (seconds: number): string => {
+    if (seconds < 60) {
+      return `${seconds}s`;
+    } else if (seconds < 3600) {
+      const minutes: number = Math.floor(seconds / 60);
+      const remainingSeconds: number = seconds % 60;
+      return `${minutes}m ${
+        remainingSeconds > 0 ? `${remainingSeconds}s` : ""
+      }`.trim();
+    } else {
+      const hours: number = Math.floor(seconds / 3600);
+      const remainingSeconds: number = seconds % 3600;
+      const minutes: number = Math.floor(remainingSeconds / 60);
+      return `${hours}h ${minutes > 0 ? `${minutes}m` : ""} ${
+        remainingSeconds % 60 > 0 ? `${remainingSeconds % 60}s` : ""
+      }`.trim();
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data: usersData, error } = await supabase
-        .from("users")
-        .select("name, email, score, played_time, answer_details");
+      const activityData = await fetchActivityByHourFromSupabase();
+      const totalUsers = await fetchTotalUsers();
+      const totalPlayedTime = await fetchTotalPlayedTime();
 
-      if (error) {
-        console.error("Erro ao buscar dados:", error);
-        return;
+      if (activityData) {
+        setActivityByHour(activityData);
       }
-
-      setUserDetails(usersData || []);
+      if (totalUsers) {
+        setTotalUsers(totalUsers);
+      }
+      if (totalPlayedTime) {
+        setTotalPlayedTime(totalPlayedTime);
+      }
     };
 
     fetchData();
   }, []);
 
-  const data = {
-    labels: userDetails.map((user) => user.name),
+  const averagePlayedTime =
+    totalUsers > 0 ? (totalPlayedTime / totalUsers).toFixed(2) : 0;
+
+  const formattedTotalPlayedTime = formatTime(totalPlayedTime);
+  const formattedAveragePlayedTime = formatTime(Number(averagePlayedTime));
+
+  const activityData = {
+    labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
     datasets: [
       {
-        label: "Pontuação",
-        data: userDetails.map((user) => user.score),
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
-        borderColor: "rgba(255, 99, 132, 1)",
-        borderWidth: 1,
-      },
-      {
-        label: "Tempo Gasto (s)",
-        data: userDetails.map((user) => user.played_time),
+        label: "Atividade por hora",
+        data: activityByHour,
         backgroundColor: "rgba(54, 162, 235, 0.2)",
         borderColor: "rgba(54, 162, 235, 1)",
         borderWidth: 1,
@@ -75,13 +76,54 @@ const DashboardPage = () => {
     ],
   };
 
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
+  };
+
   return (
-    <div>
-      <h2>Dashboard</h2>
-      <Bar data={data} options={{ scales: { y: { beginAtZero: true } } }} />
-      <div>
-        <h3>Detalhes dos Usuários</h3>
-        {/* Mantenha a lista de detalhes dos usuários aqui */}
+    <div className="flex flex-col">
+      <div className="flex justify-evenly">
+        <div className="bg-white shadow-md rounded-lg p-4 mb-4 h-60 w-1/5 hover:scale-110 transition-transform duration-300">
+          <div className="flex justify-center">
+            <FaUsers className="w-12 h-12" />
+          </div>
+          <div className="text-center text-6xl mt-4">{totalUsers}</div>
+          <h2 className="text-md text-center text-gray-400 font-bold">
+            Total de usuários
+          </h2>
+        </div>
+        <div className="bg-white shadow-md rounded-lg p-4 mb-4 h-60 w-1/5 hover:scale-110 transition-transform duration-300">
+          <div className="flex justify-center">
+            <MdAccessTime className="w-12 h-12" />
+          </div>
+          <div className="text-center text-6xl mt-4">
+            {formattedTotalPlayedTime}
+          </div>
+          <h2 className="text-md text-center text-gray-400 font-bold">
+            Tempo total
+          </h2>
+        </div>
+        <div className="bg-white shadow-md rounded-lg p-4 mb-4 h-60 w-1/5 hover:scale-110 transition-transform duration-300">
+          <div className="flex justify-center">
+            <AiOutlineFieldTime className="w-12 h-12" />
+          </div>
+          <div className="text-center text-6xl mt-4">
+            {formattedAveragePlayedTime}
+          </div>
+          <h2 className="text-md text-center text-gray-400 font-bold">
+            Tempo médio jogado
+          </h2>
+        </div>
+      </div>
+      <div className="flex items-center justify-center">
+        <Line data={activityData} options={options} />
       </div>
     </div>
   );
