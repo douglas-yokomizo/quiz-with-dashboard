@@ -100,26 +100,28 @@ const QuizPage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
+    <div className="flex flex-col justify-center items-center h-screen bg-blue-700">
       {/* <img src="/path/to/logo.png" alt="Empresa Logo" className="mb-8" /> */}
       <div className="w-full max-w-md">
         <div className="bg-gray-200 h-2 w-full mb-6">
           <div
-            className="bg-blue-600 h-2"
+            className="bg-blue-600 h-2 transition-all duration-500"
             style={{ width: `${(remainingTime / 30) * 100}%` }}
-          ></div>
+          />
         </div>
-        <div>Tempo total: {totalTime} segundos </div>
+        <div className="text-white text-2xl">
+          Tempo total: {totalTime} segundos{" "}
+        </div>
         {randomQuestions.length > 0 && (
           <div>
-            <p className="flex justify-center items-center">
+            <p className="text-white text-2xl flex justify-center items-center">
               {randomQuestions[currentIndex].question}
             </p>
             <div className="flex flex-col">
-              {randomQuestions[currentIndex].options.map((option) => (
+              {randomQuestions[currentIndex].options.map((option, index) => (
                 <button
                   key={option}
-                  className={`${
+                  className={`text-white text-2xl rounded-full border-2 text-left border-white p-2 pl-4 my-2 ${
                     selectedAnswer === option
                       ? isCorrectAnswer
                         ? "bg-blue-500"
@@ -128,11 +130,13 @@ const QuizPage = () => {
                   }`}
                   onClick={() => handleSelectOption(option)}
                 >
-                  {option}
+                  {String.fromCharCode(97 + index)}) {option}
                 </button>
               ))}
             </div>
-            <div>Remaining time: {remainingTime} seconds</div>
+            <div className="text-white text-2xl">
+              Remaining time: {remainingTime} seconds
+            </div>
           </div>
         )}
       </div>

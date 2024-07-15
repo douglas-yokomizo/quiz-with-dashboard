@@ -34,16 +34,18 @@ const RankingPage = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Ranking</h2>
-      <ol>
-        {ranking.map((user, index) => (
-          <li key={index}>
-            {user.name} ({user.email}) - Acertos: {user.score}, Tempo:{" "}
-            {user.played_time}s
-          </li>
-        ))}
-      </ol>
+    <div className="bg-blue-700 h-screen flex flex-col justify-center items-center">
+      <div className="bg-white text-blue-700 w-1/3 self-center max-w-sm mx-auto p-5 rounded-[80px] shadow-lg border-4 border-orange-400">
+        <h2 className="text-center text-2xl my-3">Ranking</h2>
+        <ol className="list-decimal pl-5">
+          {ranking.map((user, index) => (
+            <li key={index} className="mb-2">
+              <span className="font-bold">{user.name}</span> ({user.email}) -
+              Acertos: {user.score}, Tempo: {user.played_time}s
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
   );
 };

@@ -88,7 +88,7 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-10">
       <div className="flex justify-evenly">
         <div className="bg-white shadow-md rounded-lg p-4 mb-4 h-60 w-1/5 hover:scale-110 transition-transform duration-300">
           <div className="flex justify-center">
