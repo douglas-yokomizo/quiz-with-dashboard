@@ -92,7 +92,7 @@ const DashboardPage = () => {
       <div className="flex justify-evenly">
         <div className="bg-white shadow-md rounded-lg p-4 mb-4 h-60 w-1/5 hover:scale-110 transition-transform duration-300">
           <div className="flex justify-center">
-            <FaUsers className="w-12 h-12" />
+            <FaUsers className="w-12 h-12 text-blue-600" />
           </div>
           <div className="text-center text-6xl mt-4">{totalUsers}</div>
           <h2 className="text-md text-center text-gray-400 font-bold">
@@ -101,7 +101,7 @@ const DashboardPage = () => {
         </div>
         <div className="bg-white shadow-md rounded-lg p-4 mb-4 h-60 w-1/5 hover:scale-110 transition-transform duration-300">
           <div className="flex justify-center">
-            <MdAccessTime className="w-12 h-12" />
+            <MdAccessTime className="w-12 h-12 text-blue-600" />
           </div>
           <div className="text-center text-6xl mt-4">
             {formattedTotalPlayedTime}
@@ -112,7 +112,7 @@ const DashboardPage = () => {
         </div>
         <div className="bg-white shadow-md rounded-lg p-4 mb-4 h-60 w-1/5 hover:scale-110 transition-transform duration-300">
           <div className="flex justify-center">
-            <AiOutlineFieldTime className="w-12 h-12" />
+            <AiOutlineFieldTime className="w-12 h-12 text-blue-600" />
           </div>
           <div className="text-center text-6xl mt-4">
             {formattedAveragePlayedTime}

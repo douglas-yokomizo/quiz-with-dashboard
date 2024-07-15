@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useQuiz } from "../contexts/QuizContext";
 import { useState } from "react";
+import { supabase } from "../lib/supabase";
 
 const SignupPage = () => {
   const { setUserName, setUserEmail } = useQuiz();
@@ -14,6 +15,25 @@ const SignupPage = () => {
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+
+    const { data: existingUsers, error } = await supabase
+      .from("users")
+      .select("email")
+      .eq("email", email)
+      .single();
+
+    if (error && error.message !== "No rows found") {
+      console.error("Erro ao verificar email:", error);
+      setMessage("Erro ao verificar email.");
+      setLoading(false);
+      return;
+    }
+
+    if (existingUsers) {
+      setMessage("Email já cadastrado.");
+      setLoading(false);
+      return;
+    }
 
     setUserName(name);
     setUserEmail(email);
