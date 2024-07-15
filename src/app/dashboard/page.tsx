@@ -6,7 +6,7 @@ import {
   fetchActivityByHourFromSupabase,
   fetchTotalPlayedTime,
   fetchTotalUsers,
-} from "../services/supabaseService"; // Ajuste o caminho conforme necessário
+} from "../services/supabaseService";
 import { FaUsers } from "react-icons/fa";
 import { MdAccessTime } from "react-icons/md";
 import { AiOutlineFieldTime } from "react-icons/ai";

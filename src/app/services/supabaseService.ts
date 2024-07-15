@@ -1,4 +1,4 @@
-import { supabase } from "../lib/supabase"; // Ajuste o caminho conforme necessário
+import { supabase } from "../lib/supabase";
 
 export const fetchActivityByHourFromSupabase = async () => {
   const { data, error } = await supabase
@@ -21,7 +21,6 @@ export const fetchActivityByHourFromSupabase = async () => {
       activityByHour[currentHour]++;
       currentHour = (currentHour + 1) % 24;
     }
-    // Ensure the end hour is also counted
     activityByHour[endHour]++;
   });
 

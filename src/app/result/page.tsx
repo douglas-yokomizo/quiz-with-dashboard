@@ -1,7 +1,5 @@
 "use client";
-import Link from "next/link";
 import { useQuiz } from "../contexts/QuizContext";
-import { useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
 
