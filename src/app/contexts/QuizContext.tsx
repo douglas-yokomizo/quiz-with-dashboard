@@ -8,7 +8,8 @@ import {
 } from "react";
 
 type AnswerDetail = {
-  questionId: string;
+  id: number;
+  question: string;
   isCorrect: boolean;
   selectedOption: string;
 };
@@ -30,6 +31,7 @@ type QuizContextType = {
   addAnswerDetail: (detail: AnswerDetail) => void;
   setUserName: (name: string) => void;
   setUserEmail: (email: string) => void;
+  resetQuiz: () => void;
 };
 
 const defaultState: QuizContextType = {
@@ -49,6 +51,7 @@ const defaultState: QuizContextType = {
   addAnswerDetail: () => {},
   setUserName: () => {},
   setUserEmail: () => {},
+  resetQuiz: () => {},
 };
 
 const QuizContext = createContext<QuizContextType>(defaultState);
@@ -87,6 +90,17 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
     setAnswerDetails((prev) => [...prev, detail]);
   }, []);
 
+  const resetQuiz = useCallback(() => {
+    setCorrectAnswers(defaultState.correctAnswers);
+    setWrongAnswers(defaultState.wrongAnswers);
+    setTotalTimeSpent(defaultState.totalTimeSpent);
+    setStartTime(defaultState.startTime);
+    setEndTime(defaultState.endTime);
+    setAnswerDetails(defaultState.answerDetails);
+    setUserName(defaultState.userName);
+    setUserEmail(defaultState.userEmail);
+  }, []);
+
   return (
     <QuizContext.Provider
       value={{
@@ -106,6 +120,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         addAnswerDetail,
         setUserName,
         setUserEmail,
+        resetQuiz,
       }}
     >
       {children}

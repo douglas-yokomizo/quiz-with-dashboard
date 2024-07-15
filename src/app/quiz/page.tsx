@@ -6,6 +6,7 @@ import { questions } from "../data/questions";
 import { useQuiz } from "../contexts/QuizContext";
 
 type Question = {
+  id: number;
   question: string;
   answer: string;
   options: string[];
@@ -82,7 +83,8 @@ const QuizPage = () => {
     setIsCorrectAnswer(isCorrect);
 
     const detail = {
-      questionId: randomQuestions[currentIndex].question,
+      id: randomQuestions[currentIndex].id,
+      question: randomQuestions[currentIndex].question,
       isCorrect,
       selectedOption: option,
     };

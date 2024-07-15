@@ -3,8 +3,10 @@ import Link from "next/link";
 import { useQuiz } from "../contexts/QuizContext";
 import { useEffect } from "react";
 import { supabase } from "../lib/supabase";
+import { useRouter } from "next/navigation";
 
 const ResultPage = () => {
+  const route = useRouter();
   const {
     correctAnswers,
     userName,
@@ -13,59 +15,30 @@ const ResultPage = () => {
     totalTimeSpent,
     startTime,
     endTime,
+    resetQuiz,
   } = useQuiz();
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const { data: userData, error: userError } = await supabase
-          .from("users")
-          .insert([
-            {
-              name: userName,
-              email: userEmail,
-              score: correctAnswers,
-              played_time: totalTimeSpent,
-            },
-          ])
-          .single();
+  const sendData = async () => {
+    const { data, error } = await supabase.from("users").insert([
+      {
+        name: userName,
+        email: userEmail,
+        score: correctAnswers,
+        played_time: totalTimeSpent,
+        start_time: startTime,
+        end_time: endTime,
+        answer_details: answerDetails,
+      },
+    ]);
 
-        if (userError) throw userError;
-
-        const answerDetailsPayload = answerDetails.map((detail) => ({
-          questionId: detail.questionId,
-          isCorrect: detail.isCorrect,
-          selectedOption: detail.selectedOption,
-        }));
-
-        const { error: answerDetailsError } = await supabase
-          .from("quiz_results")
-          .insert({
-            answers_details: answerDetailsPayload,
-            start_time: startTime,
-            end_time: endTime,
-            played_time: totalTimeSpent,
-            score: correctAnswers,
-          });
-
-        if (answerDetailsError) throw answerDetailsError;
-
-        console.log("Dados enviados com sucesso");
-      } catch (error) {
-        console.error("Erro ao enviar os dados", error);
-      }
+    if (error) {
+      console.error("Erro ao enviar dados para o Supabase", error);
+    } else {
+      console.log("Dados enviados com sucesso", data);
+      resetQuiz();
+      route.push("/");
     }
-
-    fetchData();
-  }, [
-    correctAnswers,
-    userName,
-    userEmail,
-    answerDetails,
-    endTime,
-    startTime,
-    totalTimeSpent,
-  ]);
+  };
 
   return (
     <div className="bg-blue-700 h-screen flex flex-col justify-center items-center">
@@ -80,9 +53,9 @@ const ResultPage = () => {
         <h4 className="text-center mt-6 text-xl">Parabéns!</h4>
       </div>
       <div className="flex">
-        <Link href={"/ranking"} className="">
-          <p>Ranking</p>
-        </Link>
+        <button onClick={sendData} className="">
+          <p>Finalizar Quiz</p>
+        </button>
       </div>
     </div>
   );

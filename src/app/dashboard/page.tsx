@@ -1,87 +1,88 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-type QuizSummary = {
-  totalUsers: number | null;
-  averageTimeSpent: number;
-  totalQuestionsAnswered: number;
-  totalCorrectAnswers: number;
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+type UserDetails = {
+  name: string;
+  email: string;
+  score: number;
+  played_time: number;
+  answer_details: AnswerDetails[];
 };
 
-type AnswerDetail = {
-  questionId: string;
+type AnswerDetails = {
+  questionId: number;
   isCorrect: boolean;
   selectedOption: string;
-  userId: string;
 };
 
 const DashboardPage = () => {
-  const [summary, setSummary] = useState<QuizSummary | null>(null);
-  const [answerDetails, setAnswerDetails] = useState<AnswerDetail[]>([]);
+  const [userDetails, setUserDetails] = useState<UserDetails[]>([]);
 
   useEffect(() => {
-    const fetchSummary = async () => {
-      try {
-        const { count: totalUsers } = await supabase
-          .from("users")
-          .select("id", { count: "exact" });
+    const fetchData = async () => {
+      const { data: usersData, error } = await supabase
+        .from("users")
+        .select("name, email, score, played_time, answer_details");
 
-        const { data: quizResults, error } = await supabase.rpc(
-          "fetch_quiz_summary"
-        );
-
-        if (error) throw error;
-
-        if (quizResults && quizResults.length > 0) {
-          const {
-            average_time_spent,
-            total_quiz_attempts,
-            average_user_score,
-          } = quizResults[0];
-          setSummary({
-            totalUsers,
-            averageTimeSpent: average_time_spent,
-            totalQuestionsAnswered: total_quiz_attempts,
-            totalCorrectAnswers: average_user_score,
-          });
-        }
-
-        const { data: answerDetailsData, error: answerDetailsError } =
-          await supabase.from("answer_details").select("*");
-
-        if (answerDetailsError) throw answerDetailsError;
-
-        setAnswerDetails(answerDetailsData);
-      } catch (error) {
-        console.error("Erro ao buscar dados do dashboard:", error);
+      if (error) {
+        console.error("Erro ao buscar dados:", error);
+        return;
       }
+
+      setUserDetails(usersData || []);
     };
 
-    fetchSummary();
+    fetchData();
   }, []);
 
-  if (!summary) {
-    return <div>Carregando...</div>;
-  }
+  const data = {
+    labels: userDetails.map((user) => user.name),
+    datasets: [
+      {
+        label: "Pontuação",
+        data: userDetails.map((user) => user.score),
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgba(255, 99, 132, 1)",
+        borderWidth: 1,
+      },
+      {
+        label: "Tempo Gasto (s)",
+        data: userDetails.map((user) => user.played_time),
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
+        borderColor: "rgba(54, 162, 235, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
 
   return (
     <div>
-      <h2>Dashboard do Quiz</h2>
-      <p>Quantidade de usuários: {summary.totalUsers}</p>
-      <p>Tempo médio de jornada: {summary.averageTimeSpent} segundos</p>
-      <p>Total de perguntas respondidas: {summary.totalQuestionsAnswered}</p>
-      <p>Total de respostas corretas: {summary.totalCorrectAnswers}</p>
-      <h3>Detalhes das Respostas</h3>
-      <ul>
-        {answerDetails.map((detail, index) => (
-          <li key={index}>
-            Usuário: {detail.userId}, Pergunta: {detail.questionId}, Resposta
-            Selecionada: {detail.selectedOption}, Correta:{" "}
-            {detail.isCorrect ? "Sim" : "Não"}
-          </li>
-        ))}
-      </ul>
+      <h2>Dashboard</h2>
+      <Bar data={data} options={{ scales: { y: { beginAtZero: true } } }} />
+      <div>
+        <h3>Detalhes dos Usuários</h3>
+        {/* Mantenha a lista de detalhes dos usuários aqui */}
+      </div>
     </div>
   );
 };
