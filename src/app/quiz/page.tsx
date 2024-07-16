@@ -1,9 +1,10 @@
 "use client";
-
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { questions } from "../data/questions";
 import { useQuiz } from "../contexts/QuizContext";
+import whiteLogo from "@/app/public/SCANNTECH_logo_white.png";
+import Image from "next/image";
 
 type Question = {
   id: number;
@@ -101,20 +102,19 @@ const QuizPage = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-blue-700">
-      {/* <img src="/path/to/logo.png" alt="Empresa Logo" className="mb-8" /> */}
+      <Image src={whiteLogo} alt="Empresa Logo" height={240} width={240} />
       <div className="w-full max-w-md">
         <div className="bg-gray-200 h-2 w-full mb-6">
           <div
-            className="bg-blue-600 h-2 transition-all duration-500"
+            className={`${
+              remainingTime <= 10 ? "bg-red-500" : "bg-green-500"
+            } h-2 transition-all duration-1000`}
             style={{ width: `${(remainingTime / 30) * 100}%` }}
           />
         </div>
-        <div className="text-white text-2xl">
-          Tempo total: {totalTime} segundos{" "}
-        </div>
         {randomQuestions.length > 0 && (
           <div>
-            <p className="text-white text-2xl flex justify-center items-center">
+            <p className="text-white text-2xl flex justify-center items-center my-10">
               {randomQuestions[currentIndex].question}
             </p>
             <div className="flex flex-col">
@@ -134,8 +134,10 @@ const QuizPage = () => {
                 </button>
               ))}
             </div>
-            <div className="text-white text-2xl">
-              Remaining time: {remainingTime} seconds
+            <div className="fixed top-0 right-0 mr-5 mt-4">
+              <div className="text-white text-xl">
+                Tempo total: {totalTime} segundos{" "}
+              </div>
             </div>
           </div>
         )}
