@@ -1,9 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Line, Pie } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import {
   fetchActivityByHourFromSupabase,
+  fetchQuestionsDetailsByUser,
   fetchTotalPlayedTime,
   fetchTotalUsers,
 } from "../services/supabaseService";
@@ -17,6 +18,10 @@ const DashboardPage = () => {
   const [activityByHour, setActivityByHour] = useState(Array(24).fill(0));
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalPlayedTime, setTotalPlayedTime] = useState(0);
+  const [questionsData, setQuestionsData] = useState<{
+    [key: string]: { correct: number; incorrect: number };
+  }>({});
+  const [selectedChart, setSelectedChart] = useState("bar");
 
   const formatTime = (seconds: number): string => {
     if (seconds < 60) {
@@ -42,6 +47,7 @@ const DashboardPage = () => {
       const activityData = await fetchActivityByHourFromSupabase();
       const totalUsers = await fetchTotalUsers();
       const totalPlayedTime = await fetchTotalPlayedTime();
+      const details = await fetchQuestionsDetailsByUser();
 
       if (activityData) {
         setActivityByHour(activityData);
@@ -51,6 +57,31 @@ const DashboardPage = () => {
       }
       if (totalPlayedTime) {
         setTotalPlayedTime(totalPlayedTime);
+      }
+      if (details) {
+        const processedData = details.reduce((acc, { answer_details }) => {
+          answer_details.forEach(
+            ({
+              question,
+              isCorrect,
+            }: {
+              question: string;
+              isCorrect: boolean;
+            }) => {
+              if (!acc[question]) {
+                acc[question] = { correct: 0, incorrect: 0 };
+              }
+              if (isCorrect) {
+                acc[question].correct += 1;
+              } else {
+                acc[question].incorrect += 1;
+              }
+            }
+          );
+          return acc;
+        }, {});
+
+        setQuestionsData(processedData);
       }
     };
 
@@ -62,6 +93,27 @@ const DashboardPage = () => {
 
   const formattedTotalPlayedTime = formatTime(totalPlayedTime);
   const formattedAveragePlayedTime = formatTime(Number(averagePlayedTime));
+  console.log(questionsData);
+
+  const answersData = {
+    labels: Object.keys(questionsData),
+    datasets: [
+      {
+        label: "Acertos",
+        data: Object.values(questionsData).map((data) => data.correct),
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
+        borderColor: "rgba(54, 162, 235, 1)",
+        borderWidth: 1,
+      },
+      {
+        label: "Erros",
+        data: Object.values(questionsData).map((data) => data.incorrect),
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgba(255, 99, 132, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
 
   const activityData = {
     labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
@@ -122,8 +174,27 @@ const DashboardPage = () => {
           </h2>
         </div>
       </div>
-      <div className="flex items-center justify-center">
-        <Line data={activityData} options={options} />
+      <div className="place-self-center my-5">
+        <button
+          className="bg-blue-500 mr-5 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+          onClick={() => setSelectedChart("bar")}
+        >
+          Acertos/Erros
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+          onClick={() => setSelectedChart("line")}
+        >
+          Horários de Atividade
+        </button>
+      </div>
+      <div className="flex justify-center p-12">
+        {selectedChart === "bar" && (
+          <Bar data={answersData} options={options} />
+        )}
+        {selectedChart === "line" && (
+          <Line data={activityData} options={options} />
+        )}
       </div>
     </div>
   );

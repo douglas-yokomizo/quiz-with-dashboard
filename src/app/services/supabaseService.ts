@@ -54,3 +54,15 @@ export const fetchTotalPlayedTime = async () => {
   );
   return totalPlayedTime;
 };
+
+export const fetchQuestionsDetailsByUser = async () => {
+  const { data, error } = await supabase
+    .from("users")
+    .select("id, answer_details");
+
+  if (error) {
+    console.error("Erro ao buscar detalhes das perguntas por usuário:", error);
+    return null;
+  }
+  return data;
+};
