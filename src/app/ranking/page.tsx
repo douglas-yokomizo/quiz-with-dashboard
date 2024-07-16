@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
+import whiteLogo from "../public/SCANNTECH_logo_white.png";
+import Image from "next/image";
 
 type UserRanking = {
   name: string;
@@ -33,19 +35,31 @@ const RankingPage = () => {
     fetchRanking();
   }, []);
 
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}m${remainingSeconds.toString().padStart(2, "0")}s`;
+  };
+
   return (
     <div className="bg-blue-700 h-screen flex flex-col justify-center items-center">
-      <div className="bg-white text-blue-700 w-1/3 self-center max-w-sm mx-auto p-5 rounded-[80px] shadow-lg border-4 border-orange-400">
-        <h2 className="text-center text-2xl my-3">Ranking</h2>
-        <ol className="list-decimal pl-5">
-          {ranking.map((user, index) => (
-            <li key={index} className="mb-2">
-              <span className="font-bold">{user.name}</span> ({user.email}) -
-              Acertos: {user.score}, Tempo: {user.played_time}s
-            </li>
-          ))}
-        </ol>
+      <div className="bg-white text-black w-2/3 self-center max-w-4xl py-6 mx-auto shadow-lg border-4 border-orange-400">
+        <div className="grid grid-cols-4 text-md text-center mb-3">
+          <div>Posição</div>
+          <div>Nome</div>
+          <div>Pontuação</div>
+          <div>Tempo</div>
+        </div>
+        {ranking.map((user, index) => (
+          <div key={index} className="grid grid-cols-4 text-xl text-center">
+            <div>{index + 1}º</div>
+            <div>{user.name}</div>
+            <div>{user.score}</div>
+            <div>{formatTime(user.played_time)}</div>
+          </div>
+        ))}
       </div>
+      <Image src={whiteLogo} alt="Scanntech Logo" width={240} />
     </div>
   );
 };
