@@ -1,7 +1,9 @@
 "use client";
+import Image from "next/image";
 import { useQuiz } from "../contexts/QuizContext";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
+import whiteLogo from "../public/SCANNTECH_logo_white.png";
 
 const ResultPage = () => {
   const route = useRouter();
@@ -50,9 +52,13 @@ const ResultPage = () => {
         </p>
         <h4 className="text-center mt-6 text-xl">Parabéns!</h4>
       </div>
-      <div className="flex">
-        <button onClick={sendData} className="">
-          <p>Finalizar Quiz</p>
+      <Image src={whiteLogo} alt="Scanntech Logo" width={180} />
+      <div className="flex justify-center mt-2">
+        <button
+          onClick={sendData}
+          className="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+        >
+          Finalizar Quiz
         </button>
       </div>
     </div>
