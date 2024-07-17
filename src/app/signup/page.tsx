@@ -45,7 +45,7 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="bg-blue-700 h-screen flex flex-col justify-center items-center">
+    <div className="bg-blue-600 h-screen flex flex-col justify-center items-center">
       <div className="bg-white text-blue-700 w-1/3 self-center max-w-sm mx-auto p-5 rounded-[80px] shadow-lg border-4 border-orange-400">
         <h2 className="text-center text-2xl my-3">Cadastro</h2>
         <form onSubmit={handleSignup} className="flex flex-col gap-4">

@@ -20,7 +20,7 @@ const DashboardPage = () => {
   const [totalPlayedTime, setTotalPlayedTime] = useState(0);
   const [questionsData, setQuestionsData] = useState<{
     [key: string]: { correct: number; incorrect: number };
-  }>({});
+  }>({} as { [key: string]: { correct: number; incorrect: number } });
   const [selectedChart, setSelectedChart] = useState("bar");
 
   const formatTime = (seconds: number): string => {
@@ -79,7 +79,7 @@ const DashboardPage = () => {
             }
           );
           return acc;
-        }, {});
+        }, {} as { [key: string]: { correct: number; incorrect: number } });
 
         setQuestionsData(processedData);
       }
@@ -144,7 +144,7 @@ const DashboardPage = () => {
       <div className="flex justify-evenly">
         <div className="bg-white shadow-md rounded-lg p-4 mb-4 h-60 w-1/5 hover:scale-110 transition-transform duration-300">
           <div className="flex justify-center">
-            <FaUsers className="w-12 h-12 text-blue-600" />
+            <FaUsers className="w-12 h-12 text-blue-700" />
           </div>
           <div className="text-center text-6xl mt-4">{totalUsers}</div>
           <h2 className="text-md text-center text-gray-400 font-bold">
@@ -153,7 +153,7 @@ const DashboardPage = () => {
         </div>
         <div className="bg-white shadow-md rounded-lg p-4 mb-4 h-60 w-1/5 hover:scale-110 transition-transform duration-300">
           <div className="flex justify-center">
-            <MdAccessTime className="w-12 h-12 text-blue-600" />
+            <MdAccessTime className="w-12 h-12 text-blue-700" />
           </div>
           <div className="text-center text-6xl mt-4">
             {formattedTotalPlayedTime}
@@ -164,7 +164,7 @@ const DashboardPage = () => {
         </div>
         <div className="bg-white shadow-md rounded-lg p-4 mb-4 h-60 w-1/5 hover:scale-110 transition-transform duration-300">
           <div className="flex justify-center">
-            <AiOutlineFieldTime className="w-12 h-12 text-blue-600" />
+            <AiOutlineFieldTime className="w-12 h-12 text-blue-700" />
           </div>
           <div className="text-center text-6xl mt-4">
             {formattedAveragePlayedTime}
@@ -176,13 +176,13 @@ const DashboardPage = () => {
       </div>
       <div className="place-self-center my-5">
         <button
-          className="bg-blue-500 mr-5 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+          className="bg-blue-500 mr-5 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
           onClick={() => setSelectedChart("bar")}
         >
           Acertos/Erros
         </button>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
           onClick={() => setSelectedChart("line")}
         >
           Horários de Atividade

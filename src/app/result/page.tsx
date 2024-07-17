@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useQuiz } from "../contexts/QuizContext";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
-import whiteLogo from "../public/SCANNTECH_logo_white.png";
+import whiteLogo from "../public/scanntech_logo.png";
 
 const ResultPage = () => {
   const route = useRouter();
@@ -41,22 +41,22 @@ const ResultPage = () => {
   };
 
   return (
-    <div className="bg-blue-700 h-screen flex flex-col justify-center items-center">
-      <div className="bg-white text-blue-700 w-1/3 self-center max-w-sm mx-auto p-5 rounded-[80px] shadow-lg border-4 border-orange-400 ">
-        <h3 className="text-center text-lg mt-3">
+    <div className="bg-blue-600 h-screen flex flex-col justify-center items-center">
+      <div className="bg-white text-blue-700 w-2/3 self-center max-w-lg mx-auto p-7 rounded-[90px] shadow-lg border-4 border-orange-400 ">
+        <h3 className="text-center text-xl mt-4">
           Obrigado pela sua participação
         </h3>
-        <h4 className="text-center mt-3 text-xl">{userName}</h4>
-        <p className="text-center mt-3 text-xl">
+        <h4 className="text-center mt-4 text-2xl">{userName}</h4>
+        <p className="text-center mt-4 text-2xl">
           Você fez {correctAnswers} pontos
         </p>
-        <h4 className="text-center mt-6 text-xl">Parabéns!</h4>
+        <h4 className="text-center mt-8 text-2xl">Parabéns!</h4>
       </div>
-      <Image src={whiteLogo} alt="Scanntech Logo" width={180} />
-      <div className="flex justify-center mt-2">
+      <Image src={whiteLogo} alt="Scanntech Logo" width={252} height={0} />{" "}
+      <div className="flex justify-center mt-3">
         <button
           onClick={sendData}
-          className="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+          className="bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
         >
           Finalizar Quiz
         </button>

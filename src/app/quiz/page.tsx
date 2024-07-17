@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { questions } from "../data/questions";
 import { useQuiz } from "../contexts/QuizContext";
-import whiteLogo from "@/app/public/SCANNTECH_logo_white.png";
+import whiteLogo from "@/app/public/scanntech_logo.png";
 import Image from "next/image";
 
 type Question = {
@@ -101,7 +101,7 @@ const QuizPage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen bg-blue-700">
+    <div className="flex flex-col justify-center items-center h-screen bg-blue-600">
       <Image src={whiteLogo} alt="Empresa Logo" height={240} width={240} />
       <div className="w-full max-w-md">
         <div className="bg-gray-200 h-2 w-full mb-6">

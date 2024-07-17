@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
-import whiteLogo from "../public/SCANNTECH_logo_white.png";
+import whiteLogo from "../public/scanntech_logo.png";
 import Image from "next/image";
 
 type UserRanking = {
@@ -42,7 +42,7 @@ const RankingPage = () => {
   };
 
   return (
-    <div className="bg-blue-700 h-screen flex flex-col justify-center items-center">
+    <div className="bg-blue-600 h-screen flex flex-col justify-center items-center">
       <div className="bg-white text-black w-2/3 self-center max-w-4xl py-6 mx-auto shadow-lg border-4 border-orange-400">
         <div className="grid grid-cols-4 text-md text-center mb-3">
           <div>Posição</div>

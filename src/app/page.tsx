@@ -1,28 +1,33 @@
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@/app/public/scanntech_logo.png";
+import image1 from "@/app/public/Asset_1.png";
+import image2 from "@/app/public/Asset_2.png";
 
 export default function Home() {
   return (
-    <div className="flex h-screen">
-      {/* Imagem de fundo à esquerda */}
-      <div className="w-1/3 bg-cover"></div>
-
-      <div className="w-1/3 flex flex-col gap-10 items-center justify-center bg-black">
-        <Link
-          href={"/signup"}
-          className="bg-white py-2 px-4 mb-4 w-[90%] text-center text-5xl rounded-[80px] border-4 border-orange-400"
-        >
-          Iniciar
-        </Link>
-        <Link
-          href={"/ranking"}
-          className="bg-white py-2 px-4 mb-4 w-[90%] text-center text-5xl rounded-[80px] border-4 border-orange-400"
-        >
-          Ranking
-        </Link>
+    <div className="flex h-screen bg-blue-600 justify-between">
+      <div className="relative w-1/2">
+        <Image
+          src={logo}
+          alt="Scanntech Logo"
+          className="w-3 absolute top-0 object-cover"
+          width={300}
+        />
+        <div className="absolute px-16 py-10 bottom-0 w-2/3 left-1/4 text-white bg-black h-4/5">
+          <p className="text-8xl font-semibold">
+            (IN)
+            <br /> <span>MO</span>
+            <br />
+            TION
+          </p>
+          <hr className="my-6 w-3/4 border-2" />
+          <p className="text-4xl">
+            Você <br /> em alta <br /> performance
+          </p>
+        </div>
       </div>
-
-      {/* Imagem de fundo à direita */}
-      <div className="w-1/3 bg-cover"></div>
+      <div></div>
     </div>
   );
 }
