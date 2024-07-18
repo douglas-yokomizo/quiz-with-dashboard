@@ -1,9 +1,11 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useQuiz } from "../contexts/QuizContext";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
-import whiteLogo from "../public/scanntech_logo.png";
+import logo from "../public/scanntech_logo.png";
+import image1 from "../public/Asset_1.png";
 
 const ResultPage = () => {
   const route = useRouter();
@@ -41,25 +43,51 @@ const ResultPage = () => {
   };
 
   return (
-    <div className="bg-blue-600 h-screen flex flex-col justify-center items-center">
-      <div className="bg-white text-blue-700 w-2/3 self-center max-w-lg mx-auto p-7 rounded-[90px] shadow-lg border-4 border-orange-400 ">
-        <h3 className="text-center text-xl mt-4">
-          Obrigado pela sua participação
-        </h3>
-        <h4 className="text-center mt-4 text-2xl">{userName}</h4>
-        <p className="text-center mt-4 text-2xl">
-          Você fez {correctAnswers} pontos
-        </p>
-        <h4 className="text-center mt-8 text-2xl">Parabéns!</h4>
+    <div className="flex gap-10 h-screen bg-blue-600 justify-between">
+      <div className="relative flex flex-col items-center w-1/2">
+        <Image
+          src={logo}
+          alt="Scanntech Logo"
+          className="w-4/5 z-10 absolute transform translate-x-10 -translate-y-20"
+        />
+        <div className="absolute px-20 py-16 z-0 bottom-0 w-2/3 left-1/4 text-white bg-black h-4/5">
+          <p className="text-9xl font-semibold">
+            (IN)
+            <br /> <span>MO</span>
+            <br />
+            TION
+          </p>
+          <hr className="my-6 w-3/4 border-2" />
+          <p className="text-5xl w-3/4">
+            Você <br /> em alta <br /> performance
+          </p>
+        </div>
       </div>
-      <Image src={whiteLogo} alt="Scanntech Logo" width={252} height={0} />{" "}
-      <div className="flex justify-center mt-3">
-        <button
-          onClick={sendData}
-          className="bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
-        >
-          Finalizar Quiz
-        </button>
+      <div className="place-self-center w-1/2">
+        <div className="bg-black px-16 py-14 h-1/2 text-white relative">
+          <h3 className="transform -translate-y-32 pl-4 text-5xl">Parabéns</h3>
+          <h2 className="text-4xl">
+            {userName} <br />{" "}
+            <span className="text-6xl">Você fez {correctAnswers} PONTOS</span>
+          </h2>
+          <Image
+            src={image1}
+            alt="Circulo 1"
+            className="absolute -top-20 -left-14 w-32"
+          />
+        </div>
+        <div className="flex justify-evenly gap-4 text-white items-start ml-[4rem] mt-[2rem]">
+          <p className="place-self-center text-3xl">
+            Obrigado pela <br /> participação!
+          </p>
+          <Link
+            href={"/"}
+            onClick={sendData}
+            className="uppercase bg-orange-500 w-2/5 py-5 text-4xl rounded-lg font-semibold text-center"
+          >
+            Finalizar quiz
+          </Link>
+        </div>
       </div>
     </div>
   );
