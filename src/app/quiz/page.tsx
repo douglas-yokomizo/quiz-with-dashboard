@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { questions } from "../data/questions";
 import { useQuiz } from "../contexts/QuizContext";
-import whiteLogo from "@/app/public/scanntech_logo.png";
+import logo from "@/app/public/scanntech_logo.png";
 import Image from "next/image";
 
 type Question = {
@@ -102,45 +102,62 @@ const QuizPage = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-blue-600">
-      <Image src={whiteLogo} alt="Empresa Logo" height={240} width={240} />
-      <div className="w-full max-w-md">
-        <div className="bg-gray-200 h-2 w-full mb-6">
-          <div
-            className={`${
-              remainingTime <= 10 ? "bg-red-500" : "bg-green-500"
-            } h-2 transition-all duration-1000`}
-            style={{ width: `${(remainingTime / 30) * 100}%` }}
-          />
+      <div className="bg-white relative pt-20 w-[90%] h-[90%] flex flex-col items-center justify-center">
+        <div className="flex text-white text-3xl font-semibold justify-end items-center bg-blue-600 w-2/5 h-[5rem] absolute top-0 right-0">
+          <Image src={logo} alt="Logo Scanntech" className="w-80 transform" />
+          <p>(IN) MOTION</p>
         </div>
-        {randomQuestions.length > 0 && (
-          <div>
-            <p className="text-white text-2xl flex justify-center items-center my-10">
-              {randomQuestions[currentIndex].question}
-            </p>
-            <div className="flex flex-col">
-              {randomQuestions[currentIndex].options.map((option, index) => (
-                <button
-                  key={option}
-                  className={`text-white text-2xl rounded-full border-2 text-left border-white p-2 pl-4 my-2 ${
-                    selectedAnswer === option
-                      ? isCorrectAnswer
-                        ? "bg-blue-500"
-                        : "bg-red-500"
-                      : ""
+        <div className="w-full max-w-screen-lg mb-20">
+          {randomQuestions.length > 0 && (
+            <div className="text-5xl w-full relative pt-5">
+              <span className="absolute text-8xl font-bold transform -translate-x-[110%] translate-y-0">
+                {currentIndex + 1}.
+              </span>
+              <div className="pl-2">
+                {" "}
+                <p
+                  className={`${
+                    randomQuestions[currentIndex].id === 17
+                      ? "text-3xl text-blue-600 font-bold mb-14 text-left"
+                      : "text-blue-600 text-left font-bold mb-20"
                   }`}
-                  onClick={() => handleSelectOption(option)}
                 >
-                  {String.fromCharCode(97 + index)}) {option}
-                </button>
-              ))}
-            </div>
-            <div className="fixed top-0 right-0 mr-5 mt-4">
-              <div className="text-white text-xl">
-                Tempo total: {totalTime} segundos{" "}
+                  {randomQuestions[currentIndex].question}
+                </p>
+              </div>
+              <div className="flex flex-col">
+                {randomQuestions[currentIndex].options.map((option, index) => (
+                  <button
+                    key={option}
+                    className={`text-white font-light rounded-[1rem] text-left py-4 pl-10 my-2 ${
+                      selectedAnswer === option
+                        ? isCorrectAnswer
+                          ? "bg-blue-600"
+                          : "bg-red-800"
+                        : "bg-orange-500"
+                    }`}
+                    onClick={() => handleSelectOption(option)}
+                  >
+                    {String.fromCharCode(97 + index)}) {option}
+                  </button>
+                ))}
               </div>
             </div>
+          )}
+        </div>
+        <div className="absolute right-0 bottom-0 mr-5 mt-4">
+          <div className="text-blue-600 text-xl">
+            Tempo total: {totalTime} segundos{" "}
           </div>
-        )}
+          <div className="bg-gray-200 h-2 w-full mb-6">
+            <div
+              className={`${
+                remainingTime <= 10 ? "bg-red-500" : "bg-green-500"
+              } h-2 transition-all duration-1000`}
+              style={{ width: `${(remainingTime / 30) * 100}%` }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
