@@ -93,7 +93,6 @@ const DashboardPage = () => {
 
   const formattedTotalPlayedTime = formatTime(totalPlayedTime);
   const formattedAveragePlayedTime = formatTime(Number(averagePlayedTime));
-  console.log(questionsData);
 
   const answersData = {
     labels: Object.keys(questionsData),

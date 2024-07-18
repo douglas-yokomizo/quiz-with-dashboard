@@ -159,7 +159,7 @@ export const questions = [
     question:
       "A participação da indústria e varejo na plataforma Scanntech melhora o compreendimento de todos sobre o mercado, com informações ágeis e granulares, táticas e estratégicas, em um processo totalmente digitalizado. Quais critérios uma loja precisa cumprir para participar das plataformas Scanntech?",
     options: [
-      "CNPJ e sistema de frente de caixa homologad",
+      "CNPJ e sistema de frente de caixa homologado",
       "CNPJ e cadastro com no mínimo 10 indústrias",
       "Sistema de frente de caixa homologado e no mínimo 3 checkouts",
     ],

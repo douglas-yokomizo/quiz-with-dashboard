@@ -64,11 +64,13 @@ const ResultPage = () => {
         </div>
       </div>
       <div className="place-self-center w-1/2">
-        <div className="bg-black px-16 py-14 h-1/2 text-white relative">
-          <h3 className="transform -translate-y-32 pl-4 text-5xl">Parabéns</h3>
-          <h2 className="text-4xl">
+        <div className="bg-black px-16 w-11/12 pb-7 h-1/2 text-white relative">
+          <h3 className="transform -translate-y-16 pl-4 text-5xl">Parabéns</h3>
+          <h2 className="text-6xl uppercase font-semibold">
             {userName} <br />{" "}
-            <span className="text-6xl">Você fez {correctAnswers} PONTOS</span>
+            <span className="text-6xl text-orange-500 normal-case">
+              Você fez {correctAnswers} PONTOS
+            </span>
           </h2>
           <Image
             src={image1}
