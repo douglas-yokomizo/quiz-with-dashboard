@@ -1,10 +1,11 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { questions } from "../data/questions";
 import { useQuiz } from "../contexts/QuizContext";
 import logo from "@/app/public/scanntech_logo.png";
-import Image from "next/image";
+import Image3 from "@/app/public/Asset_3.png";
 
 type Question = {
   id: number;
@@ -145,18 +146,25 @@ const QuizPage = () => {
             </div>
           )}
         </div>
-        <div className="absolute right-0 bottom-0 mr-5 mt-4">
-          <div className="text-blue-600 text-xl">
-            Tempo total: {totalTime} segundos{" "}
+        <div className="flex justify-between w-full">
+          <div className="absolute right-0 bottom-0 mr-5 mt-4">
+            <div className="text-blue-600 text-xl">
+              Tempo total: {totalTime} segundos{" "}
+            </div>
+            <div className="bg-gray-200 h-2 w-full mb-6">
+              <div
+                className={`${
+                  remainingTime <= 10 ? "bg-red-500" : "bg-green-500"
+                } h-2 transition-all duration-1000`}
+                style={{ width: `${(remainingTime / 30) * 100}%` }}
+              />
+            </div>
           </div>
-          <div className="bg-gray-200 h-2 w-full mb-6">
-            <div
-              className={`${
-                remainingTime <= 10 ? "bg-red-500" : "bg-green-500"
-              } h-2 transition-all duration-1000`}
-              style={{ width: `${(remainingTime / 30) * 100}%` }}
-            />
-          </div>
+          <Image
+            src={Image3}
+            alt="Circulo preto"
+            className="w-32 absolute -bottom-8 -left-8"
+          />
         </div>
       </div>
     </div>
