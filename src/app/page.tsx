@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/app/public/scanntech_logo.png";
-import image1 from "@/app/public/Asset_1.png";
-import image2 from "@/app/public/Asset_2.png";
+import image1 from "../app/public/Asset_1.png";
+import image2 from "../app/public/Asset_2.png";
 
 export default function Home() {
   return (
