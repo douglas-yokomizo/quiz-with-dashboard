@@ -22,7 +22,7 @@ const StartQuizPage = () => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-blue-600">
-      <h1 className="text-7xl text-orange-600">
+      <h1 className="text-7xl text-white">
         Começando o Quiz
         <Dot delay="0s" />
         <Dot delay="0.2s" />
