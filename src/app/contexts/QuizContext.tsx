@@ -23,6 +23,7 @@ type QuizContextType = {
   answerDetails: AnswerDetail[];
   userName: string;
   userEmail: string;
+  termsAccepted: boolean;
   addCorrectAnswer: () => void;
   addWrongAnswer: () => void;
   addTimeSpent: (time: number) => void;
@@ -32,6 +33,7 @@ type QuizContextType = {
   setUserName: (name: string) => void;
   setUserEmail: (email: string) => void;
   resetQuiz: () => void;
+  setTermsAccepted: (terms: boolean) => void;
 };
 
 const defaultState: QuizContextType = {
@@ -43,6 +45,7 @@ const defaultState: QuizContextType = {
   answerDetails: [],
   userName: "",
   userEmail: "",
+  termsAccepted: false,
   addCorrectAnswer: () => {},
   addWrongAnswer: () => {},
   addTimeSpent: () => {},
@@ -52,6 +55,7 @@ const defaultState: QuizContextType = {
   setUserName: () => {},
   setUserEmail: () => {},
   resetQuiz: () => {},
+  setTermsAccepted: () => {},
 };
 
 const QuizContext = createContext<QuizContextType>(defaultState);
@@ -73,6 +77,9 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
   );
   const [userName, setUserName] = useState(defaultState.userName);
   const [userEmail, setUserEmail] = useState(defaultState.userEmail);
+  const [termsAccepted, setTermsAccepted] = useState(
+    defaultState.termsAccepted
+  );
 
   const addCorrectAnswer = useCallback(() => {
     setCorrectAnswers((prev) => prev + 1);
@@ -112,6 +119,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         answerDetails,
         userName,
         userEmail,
+        termsAccepted,
         addCorrectAnswer,
         addWrongAnswer,
         addTimeSpent,
@@ -121,6 +129,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
         setUserName,
         setUserEmail,
         resetQuiz,
+        setTermsAccepted,
       }}
     >
       {children}

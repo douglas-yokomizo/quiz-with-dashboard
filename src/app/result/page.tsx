@@ -18,6 +18,7 @@ const ResultPage = () => {
     startTime,
     endTime,
     resetQuiz,
+    termsAccepted,
   } = useQuiz();
 
   const sendData = async () => {
@@ -30,6 +31,7 @@ const ResultPage = () => {
         start_time: startTime,
         end_time: endTime,
         answer_details: answerDetails,
+        accepted_terms: termsAccepted,
       },
     ]);
 
