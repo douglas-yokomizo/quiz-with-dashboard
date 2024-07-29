@@ -71,7 +71,8 @@ const ResultPage = () => {
           <h2 className="text-6xl uppercase font-semibold">
             {userName} <br />{" "}
             <span className="text-6xl text-orange-500 normal-case">
-              Você fez {correctAnswers} PONTOS
+              Você fez {correctAnswers}{" "}
+              {correctAnswers === 1 ? "PONTO" : "PONTOS"}
             </span>
           </h2>
           <Image

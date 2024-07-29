@@ -152,7 +152,7 @@ const SignupPage = () => {
                 setKeyboardVisible(true);
                 handleInputFocus("name");
               }}
-              className="w-full p-2 rounded-md border-b-2 border-gray-500"
+              className="w-full p-2 rounded-md border-b-2 border-gray-500 capitalize"
             />
             {errorName && <div style={{ color: "red" }}>{errorName}</div>}
           </div>
