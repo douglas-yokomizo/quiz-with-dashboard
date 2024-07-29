@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { supabase } from "../lib/supabase";
 import VirtualKeyboard from "../components/VirtualKeyboard";
 import TermsModal from "../components/TermsModal";
+import { FaArrowLeft } from "react-icons/fa";
 
 const SignupPage = () => {
   const { setUserName, setUserEmail, termsAccepted, setTermsAccepted } =
@@ -130,6 +131,10 @@ const SignupPage = () => {
         isKeyboardVisible ? "pb-80" : ""
       }`}
     >
+      <FaArrowLeft
+        onClick={() => route.push("/")}
+        className="absolute top-10 left-10 text-5xl text-white hover:cursor-pointer"
+      />
       <div className="bg-white text-blue-700 w-1/3 self-center max-w-sm mx-auto p-8 rounded-[80px] shadow-lg border-4 border-orange-400">
         <h2 className="text-center text-2xl my-3">Cadastro</h2>
         <form onSubmit={handleSignup} className="flex flex-col gap-4">
