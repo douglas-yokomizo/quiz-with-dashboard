@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Bar, Line } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import {
   fetchActivityByHourFromSupabase,
@@ -94,26 +94,6 @@ const DashboardPage = () => {
   const formattedTotalPlayedTime = formatTime(totalPlayedTime);
   const formattedAveragePlayedTime = formatTime(Number(averagePlayedTime));
 
-  const answersData = {
-    labels: Object.keys(questionsData),
-    datasets: [
-      {
-        label: "Acertos",
-        data: Object.values(questionsData).map((data) => data.correct),
-        backgroundColor: "rgba(54, 162, 235, 0.2)",
-        borderColor: "rgba(54, 162, 235, 1)",
-        borderWidth: 1,
-      },
-      {
-        label: "Erros",
-        data: Object.values(questionsData).map((data) => data.incorrect),
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
-        borderColor: "rgba(255, 99, 132, 1)",
-        borderWidth: 1,
-      },
-    ],
-  };
-
   const activityData = {
     labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
     datasets: [
@@ -189,7 +169,35 @@ const DashboardPage = () => {
       </div>
       <div className="flex justify-center p-12">
         {selectedChart === "bar" && (
-          <Bar data={answersData} options={options} />
+          <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead className="bg-blue-500 text-white">
+              <tr>
+                <th className="py-3 px-4 text-left border-r-2 border-white">
+                  Pergunta
+                </th>
+                <th className="py-3 px-4 text-left border-r-2 border-white">
+                  Acertos
+                </th>
+                <th className="py-3 px-4 text-left">Erros</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(questionsData).map(([question, data], index) => (
+                <tr
+                  key={question}
+                  className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
+                >
+                  <td className="border px-4 py-2">{question}</td>
+                  <td className="border px-4 py-2 text-green-600 text-center font-bold">
+                    {data.correct}
+                  </td>
+                  <td className="border px-4 py-2 text-red-600 text-center font-bold">
+                    {data.incorrect}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
         {selectedChart === "line" && (
           <Line data={activityData} options={options} />
