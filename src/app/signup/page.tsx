@@ -152,6 +152,7 @@ const SignupPage = () => {
                 setKeyboardVisible(true);
                 handleInputFocus("name");
               }}
+              autoComplete="off"
               className="w-full p-2 rounded-md border-b-2 border-gray-500 capitalize"
             />
             {errorName && <div style={{ color: "red" }}>{errorName}</div>}
@@ -161,6 +162,7 @@ const SignupPage = () => {
               Email:
             </label>
             <input
+              autoComplete="off"
               ref={emailInputRef}
               id="email"
               type="email"
