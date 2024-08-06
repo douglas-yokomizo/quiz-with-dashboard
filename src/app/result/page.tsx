@@ -88,7 +88,7 @@ const ResultPage = () => {
           <Link
             href={"/"}
             onClick={sendData}
-            className="uppercase bg-orange-500 w-2/5 py-5 text-4xl rounded-lg font-semibold text-center"
+            className="uppercase bg-orange-500 w-[44%] py-5 px-1 text-4xl rounded-lg font-semibold text-center"
           >
             Finalizar quizz
           </Link>
