@@ -3,24 +3,24 @@ export const questions = [
     id: 1,
     question: "A solução do canal indireto visa?",
     options: [
-      "Dar visibilidade para a industria sobre a operação de sell out do distribuidor",
-      "Capacitar a industria a gerenciar melhor seus parceiros distribuidores",
-      "Capacitar diretamente o distribuidor, para ganhar mais agilidade e perfomance",
+      "Dar visibilidade para a indústria sobre a operação de sell out do distribuidor",
+      "Capacitar a indústria a gerenciar melhor seus parceiros distribuidores",
+      "Capacitar diretamente o distribuidor, para ganhar mais agilidade e performance",
     ],
     answer:
-      "Capacitar diretamente o distribuidor, para ganhar mais agilidade e perfomance",
+      "Capacitar diretamente o distribuidor, para ganhar mais agilidade e performance",
   },
   {
     id: 2,
     question:
-      "Para a industria é importante que seus parceiros distribuidores tenham acesso direto a Scanntech e por que:",
+      "Para a indústria é importante que seus parceiros distribuidores tenham acesso direto a Scanntech e por que:",
     options: [
-      "Com isso a industria ganha agilidade e melhores resultados no mercado",
-      "Com isso não a industria não precisa capacitar seu time",
-      "Com isso a industria não precisa trabalhar dados",
+      "Com isso a indústria ganha agilidade e melhores resultados no mercado",
+      "Com isso a indústria não precisa capacitar seu time",
+      "Com isso a indústria não precisa trabalhar dados",
     ],
     answer:
-      "Com isso a industria ganha agilidade e melhores resultados no mercado",
+      "Com isso a indústria ganha agilidade e melhores resultados no mercado",
   },
   {
     id: 3,
@@ -34,13 +34,13 @@ export const questions = [
   },
   {
     id: 4,
-    question: "Os dados da Scanntech são uteis para qual area da industria",
+    question: "Os dados da Scanntech são úteis para qual área da indústria?",
     options: [
       "Comercial e Inteligência",
       "Marketing e Comercial",
-      "Inteligência, comercial e Marketing",
+      "Inteligência, Comercial e Marketing",
     ],
-    answer: "Inteligência, comercial e Marketing",
+    answer: "Inteligência, Comercial e Marketing",
   },
   {
     id: 5,

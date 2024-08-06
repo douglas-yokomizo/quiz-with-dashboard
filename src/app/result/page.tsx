@@ -90,7 +90,7 @@ const ResultPage = () => {
             onClick={sendData}
             className="uppercase bg-orange-500 w-2/5 py-5 text-4xl rounded-lg font-semibold text-center"
           >
-            Finalizar quiz
+            Finalizar quizz
           </Link>
         </div>
       </div>
