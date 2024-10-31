@@ -1,6 +1,7 @@
 # Quiz interativo para insights sobre a empresa
 
-Este projeto é um quiz interativo desenvolvido para avaliar e melhorar o conhecimento sobre os produtos e serviços oferecidos pelas empresas.
+- Este projeto é um quiz interativo desenvolvido para avaliar e melhorar o conhecimento sobre os produtos e serviços oferecidos pelas empresas.
+- Contém dashboard para rastreamento de dados 
 
 ## Jornada do Usuário
 
