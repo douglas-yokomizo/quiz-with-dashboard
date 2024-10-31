@@ -1,6 +1,6 @@
-# V3A Scanntech Quiz
+# Quiz interativo para insights sobre a empresa
 
-Este projeto é um quiz interativo desenvolvido para avaliar e melhorar o conhecimento sobre os produtos e serviços oferecidos pela Scanntech.
+Este projeto é um quiz interativo desenvolvido para avaliar e melhorar o conhecimento sobre os produtos e serviços oferecidos pelas empresas.
 
 ## Jornada do Usuário
 
@@ -19,6 +19,9 @@ Este projeto é um quiz interativo desenvolvido para avaliar e melhorar o conhec
 ## Como Executar o Projeto
 
 1. Abra o terminal e navegue até o Desktop com `cd .\Desktop\`
-2. Clone o repositório com `git clone https://github.com/Phygital-Live-Marketing-LTDA/v3a-scanntech-quiz.git`.
-3. Navegue até a pasta do projeto com `cd .\v3a-scanntech-quiz\`.
+2. Clone o repositório com `git clone`.
+3. Navegue até a pasta do projeto com.
 4. Execute o script `startQuiz.bat` com o comando: `.\startQuiz.bat`
+
+
+### Projeto desenvolvido para Phygital por Douglas Yokomizo
